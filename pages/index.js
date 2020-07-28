@@ -1,65 +1,57 @@
-import Head from 'next/head'
+import TextButton from '../components/TextButton'
+import TextInput from '../components/TextInput'
+import TodoItem from '../components/TodoItem'
 import styles from '../styles/Home.module.css'
+import { Component } from "react";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+class Home extends Component {
+  constructor() {
+    super()
+    this.state = {
+      text: "",
+      items: []
+    }
+    this.handleTextChange = this.handleTextChange.bind(this)
+    this.addTodo = this.addTodo.bind(this)
+    this.resetText = this.resetText.bind(this)
+  }
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+  handleTextChange(e) {
+    this.setState({
+      text: e.target.value
+    })
+  }
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  resetText() {
+    this.setState({
+      text: ""
+    })
+  }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+  addTodo() {
+    this.setState({
+      items: [...this.state.items, this.state.text]
+    })
+  };
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+  render() {
+    return (
+      <div className={styles.container}>
+        <div className={styles.todo}>
+          <TextInput placeholder="Write something" onChange={this.handleTextChange}></TextInput>
+          <TextButton text="add" onClick={this.addTodo}></TextButton>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        <div className={styles.items}>
+          { 
+            this.state.items.map((item, index) => {
+              return <TodoItem key={index} item={item}></TodoItem>
+            } )
+          }
+        </div>
+      </div>
+    )
+  }
 }
+
+export default Home
