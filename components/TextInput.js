@@ -10,7 +10,7 @@ const style = {
 class TextInput extends Component {
   render() {
     return (
-      <input type="text" style={style} placeholder={this.props.placeholder} onChange={this.props.onChange}/>
+      <input ref={input => this.input = input} type="text" style={style} value={this.props.text} placeholder={this.props.placeholder} onChange={this.props.onChange}/>
    )
   }
 }

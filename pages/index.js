@@ -33,13 +33,16 @@ class Home extends Component {
     this.setState({
       items: [...this.state.items, this.state.text]
     })
+    this.resetText()
   };
 
   render() {
     return (
       <div className={styles.container}>
         <div className={styles.todo}>
-          <TextInput placeholder="Write something" onChange={this.handleTextChange}></TextInput>
+          <TextInput
+            text={this.state.text}
+            placeholder="Write something" onChange={this.handleTextChange}></TextInput>
           <TextButton text="add" onClick={this.addTodo}></TextButton>
         </div>
         <div className={styles.items}>
